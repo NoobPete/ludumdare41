@@ -9,12 +9,21 @@ public class CarController : MonoBehaviour
     public float maxSteeringAngle; // maximum steer angle the wheel can have
 
     public float maxBoostPower;
+    public float jumpPower;
 
     private Rigidbody rb;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            rb.AddForce(Vector3.up * jumpPower);
+        }
     }
 
     // finds the corresponding visual wheel
