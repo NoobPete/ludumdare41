@@ -42,7 +42,7 @@ public class CarController : MonoBehaviour
         collider.GetWorldPose(out position, out rotation);
 
         visualWheel.transform.position = position;
-        visualWheel.transform.rotation = rotation * Quaternion.Euler(180,90,0);
+        visualWheel.transform.rotation = rotation * Quaternion.Euler(180,0,0);
     }
 
     public void FixedUpdate()
