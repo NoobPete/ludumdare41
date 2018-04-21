@@ -8,6 +8,15 @@ public class CarController : MonoBehaviour
     public float maxMotorTorque; // maximum torque the motor can apply to wheel
     public float maxSteeringAngle; // maximum steer angle the wheel can have
 
+    public float maxBoostPower;
+
+    private Rigidbody rb;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
     // finds the corresponding visual wheel
     // correctly applies the transform
     public void ApplyLocalPositionToVisuals(WheelCollider collider)
@@ -46,6 +55,11 @@ public class CarController : MonoBehaviour
             }
             ApplyLocalPositionToVisuals(axleInfo.leftWheel);
             ApplyLocalPositionToVisuals(axleInfo.rightWheel);
+        }
+
+        if (Input.GetKey("space"))
+        {
+            rb.AddForce(this.transform.forward * maxBoostPower * Time.deltaTime);
         }
     }
 }
