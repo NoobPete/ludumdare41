@@ -28,3 +28,7 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+.vs/ludumdare41/v15/Server/sqlite3/storage.ide-wal
+.vs/ludumdare41/v15/Server/sqlite3/storage.ide-shm
+.vs/ludumdare41/v15/Server/sqlite3/storage.ide
+.vs/ludumdare41/v15/Server/sqlite3/db.lock
