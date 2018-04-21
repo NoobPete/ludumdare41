@@ -1992,6 +1992,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cedd6524ffc855a4ea377ff7493064e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  car: {fileID: 945268812}
+  fov: 60
 --- !u!1 &1312126248
 GameObject:
   m_ObjectHideFlags: 0
