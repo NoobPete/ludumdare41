@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic; 
+using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class CarController : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class CarController : MonoBehaviour
     private Rigidbody rb;
     private Vector3 lastFramePos;
 
+    public Text speedField;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -30,8 +33,6 @@ public class CarController : MonoBehaviour
         {
             rb.AddForce(Vector3.up * jumpPower);
         }
-
-
     }
 
     // finds the corresponding visual wheel
@@ -91,6 +92,12 @@ public class CarController : MonoBehaviour
         {
             rb.AddForce(this.transform.forward * maxBoostPower * Time.deltaTime);
         }
+
+        float distance = Vector3.Distance(lastFramePos, transform.position);
+
+        speedField.text = Mathf.Floor(distance / Time.deltaTime * speedometerMultiplier).ToString();
+
+        lastFramePos = transform.position;
     }
 }
 
