@@ -26,6 +26,7 @@ public class CarController : MonoBehaviour
     public float normalStifness = 1;
 
     public float downforce = 0f;
+    private float speed = 0;
 
     void Start()
     {
@@ -131,7 +132,7 @@ public class CarController : MonoBehaviour
         }
         else
         {
-            rb.AddRelativeForce(-Vector3.up * downforce);
+            rb.AddRelativeForce(-Vector3.up * (50f+speed) * downforce );
         }
 
 
@@ -142,6 +143,8 @@ public class CarController : MonoBehaviour
 
         float distance = Vector3.Distance(lastFramePos, transform.position);
 
+
+        speed = Mathf.Floor(distance / Time.deltaTime * speedometerMultiplier);
         speedField.text = Mathf.Floor(distance / Time.deltaTime * speedometerMultiplier).ToString();
 
         lastFramePos = transform.position;
