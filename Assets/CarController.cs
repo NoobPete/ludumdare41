@@ -21,6 +21,11 @@ public class CarController : MonoBehaviour
 
     public Text speedField;
 
+    public float driftStifness = 0.05f;
+    public float normalStifness = 1;
+
+    public float downforce = 0f;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -32,6 +37,32 @@ public class CarController : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
             rb.AddForce(Vector3.up * jumpPower);
+        }
+
+        if (Input.GetButton("Fire3"))
+        {
+            foreach (AxleInfo axleInfo in axleInfos)
+            {
+                WheelFrictionCurve wfc = axleInfo.leftWheel.sidewaysFriction;
+                wfc.stiffness = driftStifness;
+                axleInfo.leftWheel.sidewaysFriction = wfc;
+
+                WheelFrictionCurve wfc2 = axleInfo.rightWheel.sidewaysFriction;
+                wfc2.stiffness = driftStifness;
+                axleInfo.leftWheel.sidewaysFriction = wfc2;
+            }
+        } else
+        {
+            foreach (AxleInfo axleInfo in axleInfos)
+            {
+                WheelFrictionCurve wfc = axleInfo.leftWheel.sidewaysFriction;
+                wfc.stiffness = normalStifness;
+                axleInfo.leftWheel.sidewaysFriction = wfc;
+
+                WheelFrictionCurve wfc2 = axleInfo.rightWheel.sidewaysFriction;
+                wfc2.stiffness = normalStifness;
+                axleInfo.leftWheel.sidewaysFriction = wfc2;
+            }
         }
     }
 
@@ -83,8 +114,11 @@ public class CarController : MonoBehaviour
         }
 
         if (!onGround) {
-            rb.AddRelativeTorque(new Vector3(0, airSpinPowerHorizontal * Time.deltaTime * Input.GetAxis("Horizontal"), 0));
-            rb.AddRelativeTorque(new Vector3(airSpinPowerHorizontal * Time.deltaTime * Input.GetAxis("Vertical"), 0, 0));
+            rb.AddRelativeTorque(new Vector3(0, airSpinPowerHorizontal * Input.GetAxis("Horizontal"), 0));
+            rb.AddRelativeTorque(new Vector3(airSpinPowerHorizontal * Input.GetAxis("Vertical"), 0, 0));
+        } else
+        {
+            rb.AddRelativeForce(-Vector3.up * downforce);
         }
 
 
