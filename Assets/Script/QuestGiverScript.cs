@@ -14,6 +14,8 @@ public class QuestGiverScript : MonoBehaviour {
     public Text timePassedUI;
     public Text moneyUI;
 
+    public QuestPointerScript pointer;
+
     // Use this for initialization
     void Start () {
 		
@@ -41,6 +43,8 @@ public class QuestGiverScript : MonoBehaviour {
 
                 hasObjective = true;
                 objectiveTimePassed = 0;
+
+                pointer.target = o;
             }
         }
     }
