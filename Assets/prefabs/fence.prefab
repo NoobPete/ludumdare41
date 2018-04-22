@@ -54,6 +54,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4675702454389216}
   - component: {fileID: 95561987976509086}
+  - component: {fileID: 65590526100526222}
   m_Layer: 0
   m_Name: fence
   m_TagString: Untagged
@@ -80,8 +81,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1880617419043528}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -241.5, y: -2.180412, z: 290.2}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4767182944059898}
@@ -116,7 +117,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100002, guid: 983792d0b9e20934c9fc1174fa178654, type: 3}
+  - {fileID: 2100000, guid: 21f7792373565d44abb8798fa2856445, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -150,7 +151,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 983792d0b9e20934c9fc1174fa178654, type: 3}
+  - {fileID: 2100000, guid: 21f7792373565d44abb8798fa2856445, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -184,6 +185,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1631228098703042}
   m_Mesh: {fileID: 4300002, guid: 983792d0b9e20934c9fc1174fa178654, type: 3}
+--- !u!65 &65590526100526222
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1880617419043528}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.2796402, y: 1.9272056, z: 2.024475}
+  m_Center: {x: 0.010555267, y: 0.82948613, z: 0.008132935}
 --- !u!95 &95561987976509086
 Animator:
   serializedVersion: 3
