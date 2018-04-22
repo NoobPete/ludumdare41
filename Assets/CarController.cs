@@ -14,6 +14,7 @@ public class CarController : MonoBehaviour
 
     public float airSpinPowerHorizontal;
     public float airSpinPowerVertical;
+    public float airSpinPowerPitch;
     public float speedometerMultiplier;
 
     private Rigidbody rb;
@@ -51,7 +52,8 @@ public class CarController : MonoBehaviour
                 wfc2.stiffness = driftStifness;
                 axleInfo.leftWheel.sidewaysFriction = wfc2;
             }
-        } else
+        }
+        else
         {
             foreach (AxleInfo axleInfo in axleInfos)
             {
@@ -82,7 +84,7 @@ public class CarController : MonoBehaviour
         collider.GetWorldPose(out position, out rotation);
 
         visualWheel.transform.position = position;
-        visualWheel.transform.rotation = rotation * Quaternion.Euler(180,0,0);
+        visualWheel.transform.rotation = rotation * Quaternion.Euler(180, 0, 0);
     }
 
     public void FixedUpdate()
@@ -108,15 +110,26 @@ public class CarController : MonoBehaviour
             ApplyLocalPositionToVisuals(axleInfo.rightWheel);
 
             WheelHit wh;
-            if (axleInfo.leftWheel.GetGroundHit(out wh)) {
+            if (axleInfo.leftWheel.GetGroundHit(out wh))
+            {
                 onGround = true;
             }
         }
 
-        if (!onGround) {
-            rb.AddRelativeTorque(new Vector3(0, airSpinPowerHorizontal * Input.GetAxis("Horizontal"), 0));
+        if (!onGround)
+        {
+            if (!Input.GetButton("Fire3"))
+            {
+                rb.AddRelativeTorque(new Vector3(0, airSpinPowerHorizontal * Input.GetAxis("Horizontal"), 0));
+            }
+            else
+            {
+                rb.AddRelativeTorque(new Vector3(0, 0, -airSpinPowerPitch * Input.GetAxis("Horizontal")));
+            }
+
             rb.AddRelativeTorque(new Vector3(airSpinPowerHorizontal * Input.GetAxis("Vertical"), 0, 0));
-        } else
+        }
+        else
         {
             rb.AddRelativeForce(-Vector3.up * downforce);
         }

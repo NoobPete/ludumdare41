@@ -9055,8 +9055,9 @@ MonoBehaviour:
   maxSteeringAngle: 45
   maxBoostPower: 1000000
   jumpPower: 600000
-  airSpinPowerHorizontal: 4000
-  airSpinPowerVertical: 4000
+  airSpinPowerHorizontal: 6000
+  airSpinPowerVertical: 6000
+  airSpinPowerPitch: 6000
   speedometerMultiplier: 3
   speedField: {fileID: 672684233}
   driftStifness: 0.05
@@ -10980,6 +10981,48 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 51018e496523bb64f8f5ec0ec4cee17d, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &1902576437
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4182739915872110, guid: ab22a5ce441ff694babfd36e183dc126, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 54
+      objectReference: {fileID: 0}
+    - target: {fileID: 4182739915872110, guid: ab22a5ce441ff694babfd36e183dc126, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4182739915872110, guid: ab22a5ce441ff694babfd36e183dc126, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 68
+      objectReference: {fileID: 0}
+    - target: {fileID: 4182739915872110, guid: ab22a5ce441ff694babfd36e183dc126, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4182739915872110, guid: ab22a5ce441ff694babfd36e183dc126, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4182739915872110, guid: ab22a5ce441ff694babfd36e183dc126, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4182739915872110, guid: ab22a5ce441ff694babfd36e183dc126, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4182739915872110, guid: ab22a5ce441ff694babfd36e183dc126, type: 2}
+      propertyPath: m_RootOrder
+      value: 17
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: ab22a5ce441ff694babfd36e183dc126, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1936264247
 GameObject:
