@@ -11,19 +11,27 @@ public class CarController : MonoBehaviour
     public float maxBoostPower;
     public float jumpPower;
 
+    public float airSpinPowerHorizontal;
+    public float airSpinPowerVertical;
+    public float speedometerMultiplier;
+
     private Rigidbody rb;
+    private Vector3 lastFramePos;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        lastFramePos = transform.position;
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.H))
+        if (Input.GetButtonDown("Fire1"))
         {
             rb.AddForce(Vector3.up * jumpPower);
         }
+
+
     }
 
     // finds the corresponding visual wheel
@@ -47,8 +55,10 @@ public class CarController : MonoBehaviour
 
     public void FixedUpdate()
     {
-        float motor = maxMotorTorque * Input.GetAxis("Vertical");
+        float motor = maxMotorTorque * Input.GetAxis("Speed");
         float steering = maxSteeringAngle * Input.GetAxis("Horizontal");
+
+        bool onGround = false;
 
         foreach (AxleInfo axleInfo in axleInfos)
         {
@@ -64,9 +74,20 @@ public class CarController : MonoBehaviour
             }
             ApplyLocalPositionToVisuals(axleInfo.leftWheel);
             ApplyLocalPositionToVisuals(axleInfo.rightWheel);
+
+            WheelHit wh;
+            if (axleInfo.leftWheel.GetGroundHit(out wh)) {
+                onGround = true;
+            }
         }
 
-        if (Input.GetKey("space"))
+        if (!onGround) {
+            rb.AddRelativeTorque(new Vector3(0, airSpinPowerHorizontal * Time.deltaTime * Input.GetAxis("Horizontal"), 0));
+            rb.AddRelativeTorque(new Vector3(airSpinPowerHorizontal * Time.deltaTime * Input.GetAxis("Vertical"), 0, 0));
+        }
+
+
+        if (Input.GetButton("Fire2"))
         {
             rb.AddForce(this.transform.forward * maxBoostPower * Time.deltaTime);
         }

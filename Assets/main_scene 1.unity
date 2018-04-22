@@ -8150,6 +8150,8 @@ MonoBehaviour:
   maxSteeringAngle: 45
   maxBoostPower: 1000000
   jumpPower: 600000
+  airSpinPowerHorizontal: 600000
+  airSpinPowerVertical: 600000
 --- !u!114 &1312126252
 MonoBehaviour:
   m_ObjectHideFlags: 0
