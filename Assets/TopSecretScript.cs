@@ -18,6 +18,7 @@ public class TopSecretScript : MonoBehaviour {
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            QuestGiverScript.hasObjective = false;
             Destroy(gameObject);
         }
     }
