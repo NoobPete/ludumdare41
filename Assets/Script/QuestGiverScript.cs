@@ -7,9 +7,12 @@ public class QuestGiverScript : MonoBehaviour {
     public float objectiveTimePassed;
     public GameObject topSecretPrefab;
     public Transform[] placesToPlaceObjectives;
+    public float distanceToPoint;
+    public float baseMoney;
+    public float distanceMultiplierMoney;
 
     public static bool hasObjective = false;
-    public static int money = 1000;
+    public static int money = 500;
 
     public Text timePassedUI;
     public Text moneyUI;
@@ -36,10 +39,13 @@ public class QuestGiverScript : MonoBehaviour {
         {
             if (other.gameObject.CompareTag("Player"))
             {
-                money += 150;
+                money += (int)(baseMoney + distanceToPoint * distanceMultiplierMoney);
 
                 GameObject o = Instantiate(topSecretPrefab);
                 o.transform.position = placesToPlaceObjectives[Random.Range(0, placesToPlaceObjectives.Length)].position;
+
+                distanceToPoint = Vector3.Distance(transform.position, o.transform.position);
+
 
                 hasObjective = true;
                 objectiveTimePassed = 0;

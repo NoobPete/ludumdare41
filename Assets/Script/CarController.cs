@@ -48,6 +48,10 @@ public class CarController : MonoBehaviour
 
     public GameObject restartPoint;
 
+    public Scrollbar boostmeter;
+    public Scrollbar jumpmeter;
+    public Scrollbar speedometer;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -123,6 +127,22 @@ public class CarController : MonoBehaviour
                 }
             }
         }
+
+        // Reset
+
+        if (Input.GetButtonDown("Jump") || transform.position.y < -50)
+        {
+            transform.position = restartPoint.transform.position;
+            transform.rotation = restartPoint.transform.rotation;
+
+            rb.velocity = new Vector3(0,0,0);
+        }
+
+        // Update UI
+        boostmeter.size = currentBoost / maxBoost;
+        jumpmeter.size = currentJump / maxJumps;
+        speedometer.size = speed / 150;
+
     }
 
     // finds the corresponding visual wheel

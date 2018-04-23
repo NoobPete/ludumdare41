@@ -87,10 +87,10 @@ InputManager:
     joyNum: 0
   - serializedVersion: 3
     m_Name: Jump
-    descriptiveName: Notused
+    descriptiveName: Respawn
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: space
+    positiveButton: r
     altNegativeButton: 
     altPositiveButton: 
     gravity: 1000
@@ -231,7 +231,7 @@ InputManager:
     joyNum: 0
   - serializedVersion: 3
     m_Name: Jump
-    descriptiveName: 
+    descriptiveName: Respawn
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: joystick button 3
