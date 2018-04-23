@@ -77,7 +77,7 @@ public class QuestGiverScript : MonoBehaviour
                 {
                     int distanceMoney = (int)(distanceToPoint * distanceMultiplierMoney);
 
-                    int speedBonus = (int)Mathf.Lerp(100, 1000, distanceToPoint / objectiveTimePassed / 10);
+                    int speedBonus = (int)Mathf.Lerp(100, 1000, distanceToPoint / objectiveTimePassed / 15);
                     int total = (baseMoney + distanceMoney + speedBonus);
 
                     money += total;
