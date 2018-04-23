@@ -38617,6 +38617,11 @@ Prefab:
       propertyPath: speedField
       value: 
       objectReference: {fileID: 672684233}
+    - target: {fileID: 114362974431260002, guid: dde43b81ce5a4624e9a69fabbd1f2736,
+        type: 2}
+      propertyPath: jumpPower
+      value: 900000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dde43b81ce5a4624e9a69fabbd1f2736, type: 2}
   m_IsPrefabParent: 0
