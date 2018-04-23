@@ -52,6 +52,8 @@ public class CarController : MonoBehaviour
     public Scrollbar jumpmeter;
     public Scrollbar speedometer;
 
+    public QuestGiverScript questGiver;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -136,6 +138,8 @@ public class CarController : MonoBehaviour
             transform.rotation = restartPoint.transform.rotation;
 
             rb.velocity = new Vector3(0,0,0);
+
+            questGiver.hasRespawned();
         }
 
         // Update UI
