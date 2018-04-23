@@ -22,6 +22,9 @@ public class CarController : MonoBehaviour
     // NOTE: also effect reverse
     public float breakDrag;
 
+    public float speedHelper;
+    public float groundSpinForceDrift;
+
     private Rigidbody rb;
     private Vector3 lastFramePos;
 
@@ -59,7 +62,7 @@ public class CarController : MonoBehaviour
 
                     WheelFrictionCurve wfc2 = axleInfo.rightWheel.sidewaysFriction;
                     wfc2.stiffness = driftStifness;
-                    axleInfo.leftWheel.sidewaysFriction = wfc2;
+                    axleInfo.rightWheel.sidewaysFriction = wfc2;
                 }
 
                 {
@@ -69,7 +72,7 @@ public class CarController : MonoBehaviour
 
                     WheelFrictionCurve wfc2 = axleInfo.rightWheel.forwardFriction;
                     wfc2.stiffness = driftStifness;
-                    axleInfo.leftWheel.forwardFriction = wfc2;
+                    axleInfo.rightWheel.forwardFriction = wfc2;
                 }
             }
         }
@@ -84,7 +87,7 @@ public class CarController : MonoBehaviour
 
                     WheelFrictionCurve wfc2 = axleInfo.rightWheel.sidewaysFriction;
                     wfc2.stiffness = normalStifness;
-                    axleInfo.leftWheel.sidewaysFriction = wfc2;
+                    axleInfo.rightWheel.sidewaysFriction = wfc2;
                 }
 
                 {
@@ -94,7 +97,7 @@ public class CarController : MonoBehaviour
 
                     WheelFrictionCurve wfc2 = axleInfo.rightWheel.forwardFriction;
                     wfc2.stiffness = normalStifness;
-                    axleInfo.leftWheel.forwardFriction = wfc2;
+                    axleInfo.rightWheel.forwardFriction = wfc2;
                 }
             }
         }
@@ -169,6 +172,12 @@ public class CarController : MonoBehaviour
             //Turn helper
             rb.AddRelativeTorque(new Vector3(0, groundSpinForce * Input.GetAxis("Horizontal"), 0));
 
+            // Turn helper drift
+            if (Input.GetButton("Fire3"))
+            {
+                rb.AddRelativeTorque(new Vector3(0, groundSpinForceDrift * Input.GetAxis("Horizontal"), 0));
+            }
+
             // Downforce helper
             rb.AddRelativeForce(-Vector3.up * (50f+speed) * downforce );
 
@@ -176,11 +185,16 @@ public class CarController : MonoBehaviour
             float t = 1+Mathf.Min(Input.GetAxis("Speed"), 0);
             float newDrag = Mathf.Lerp(breakDrag, defaultDrag, t);
             rb.drag = newDrag;
+
+            // Speed helper
+            float t2 = Mathf.Max(Input.GetAxis("Speed"), 0);
+            
+            rb.AddForce(this.transform.forward * speedHelper * t2);
         }
 
         if (Input.GetButton("Fire2"))
         {
-            rb.AddForce(this.transform.forward * maxBoostPower * Time.deltaTime);
+            rb.AddForce(this.transform.forward * maxBoostPower);
         }
 
 
