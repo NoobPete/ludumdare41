@@ -16,6 +16,11 @@ public class CarController : MonoBehaviour
     public float airSpinPowerVertical;
     public float airSpinPowerPitch;
     public float speedometerMultiplier;
+    public float groundSpinForce;
+    // Takes from the rb on start
+    private float defaultDrag;
+    // NOTE: also effect reverse
+    public float breakDrag;
 
     private Rigidbody rb;
     private Vector3 lastFramePos;
@@ -32,6 +37,8 @@ public class CarController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         lastFramePos = transform.position;
+
+        defaultDrag = rb.drag;
     }
 
     void Update()
@@ -45,26 +52,50 @@ public class CarController : MonoBehaviour
         {
             foreach (AxleInfo axleInfo in axleInfos)
             {
-                WheelFrictionCurve wfc = axleInfo.leftWheel.sidewaysFriction;
-                wfc.stiffness = driftStifness;
-                axleInfo.leftWheel.sidewaysFriction = wfc;
+                {
+                    WheelFrictionCurve wfc = axleInfo.leftWheel.sidewaysFriction;
+                    wfc.stiffness = driftStifness;
+                    axleInfo.leftWheel.sidewaysFriction = wfc;
 
-                WheelFrictionCurve wfc2 = axleInfo.rightWheel.sidewaysFriction;
-                wfc2.stiffness = driftStifness;
-                axleInfo.leftWheel.sidewaysFriction = wfc2;
+                    WheelFrictionCurve wfc2 = axleInfo.rightWheel.sidewaysFriction;
+                    wfc2.stiffness = driftStifness;
+                    axleInfo.leftWheel.sidewaysFriction = wfc2;
+                }
+
+                {
+                    WheelFrictionCurve wfc = axleInfo.leftWheel.forwardFriction;
+                    wfc.stiffness = driftStifness;
+                    axleInfo.leftWheel.forwardFriction = wfc;
+
+                    WheelFrictionCurve wfc2 = axleInfo.rightWheel.forwardFriction;
+                    wfc2.stiffness = driftStifness;
+                    axleInfo.leftWheel.forwardFriction = wfc2;
+                }
             }
         }
         else
         {
             foreach (AxleInfo axleInfo in axleInfos)
             {
-                WheelFrictionCurve wfc = axleInfo.leftWheel.sidewaysFriction;
-                wfc.stiffness = normalStifness;
-                axleInfo.leftWheel.sidewaysFriction = wfc;
+                {
+                    WheelFrictionCurve wfc = axleInfo.leftWheel.sidewaysFriction;
+                    wfc.stiffness = normalStifness;
+                    axleInfo.leftWheel.sidewaysFriction = wfc;
 
-                WheelFrictionCurve wfc2 = axleInfo.rightWheel.sidewaysFriction;
-                wfc2.stiffness = normalStifness;
-                axleInfo.leftWheel.sidewaysFriction = wfc2;
+                    WheelFrictionCurve wfc2 = axleInfo.rightWheel.sidewaysFriction;
+                    wfc2.stiffness = normalStifness;
+                    axleInfo.leftWheel.sidewaysFriction = wfc2;
+                }
+
+                {
+                    WheelFrictionCurve wfc = axleInfo.leftWheel.forwardFriction;
+                    wfc.stiffness = normalStifness;
+                    axleInfo.leftWheel.forwardFriction = wfc;
+
+                    WheelFrictionCurve wfc2 = axleInfo.rightWheel.forwardFriction;
+                    wfc2.stiffness = normalStifness;
+                    axleInfo.leftWheel.forwardFriction = wfc2;
+                }
             }
         }
     }
@@ -119,6 +150,7 @@ public class CarController : MonoBehaviour
 
         if (!onGround)
         {
+            // Not on ground
             if (!Input.GetButton("Fire3"))
             {
                 rb.AddRelativeTorque(new Vector3(0, airSpinPowerHorizontal * Input.GetAxis("Horizontal"), 0));
@@ -132,17 +164,31 @@ public class CarController : MonoBehaviour
         }
         else
         {
-            rb.AddRelativeForce(-Vector3.up * (50f+speed) * downforce );
-        }
+            // On ground
 
+            //Turn helper
+            rb.AddRelativeTorque(new Vector3(0, groundSpinForce * Input.GetAxis("Horizontal"), 0));
+
+            // Downforce helper
+            rb.AddRelativeForce(-Vector3.up * (50f+speed) * downforce );
+
+            // Break helper
+            float t = 1+Mathf.Min(Input.GetAxis("Speed"), 0);
+            float newDrag = Mathf.Lerp(breakDrag, defaultDrag, t);
+            rb.drag = newDrag;
+        }
 
         if (Input.GetButton("Fire2"))
         {
             rb.AddForce(this.transform.forward * maxBoostPower * Time.deltaTime);
         }
 
-        float distance = Vector3.Distance(lastFramePos, transform.position);
 
+
+
+
+        // Speedometer
+        float distance = Vector3.Distance(lastFramePos, transform.position);
 
         speed = Mathf.Floor(distance / Time.deltaTime * speedometerMultiplier);
         speedField.text = Mathf.Floor(distance / Time.deltaTime * speedometerMultiplier).ToString();
