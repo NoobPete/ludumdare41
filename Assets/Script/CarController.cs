@@ -36,21 +36,43 @@ public class CarController : MonoBehaviour
     public float downforce = 0f;
     private float speed = 0;
 
+    public float maxBoost = 20f;
+    public float boostRegen = 0.1f;
+    public float currentBoost;
+
+    public float boostUsage = 1f;
+
+    public float maxJumps = 1f;
+    public float jumpRegen = 0.01f;
+    public float currentJump;
+
+    public GameObject restartPoint;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         lastFramePos = transform.position;
 
         defaultDrag = rb.drag;
+        currentBoost = maxBoost;
+        currentJump = maxJumps;
     }
 
     void Update()
     {
+        // Jump
         if (Input.GetButtonDown("Fire1"))
         {
-            rb.AddForce(Vector3.up * jumpPower);
+            if (currentJump >= 1)
+            {
+                rb.AddRelativeForce(Vector3.up * jumpPower);
+                currentJump--;
+            }
         }
 
+        currentJump = Mathf.Min (maxJumps, currentJump + jumpRegen * Time.deltaTime);
+
+        // Drift
         if (Input.GetButton("Fire3"))
         {
             foreach (AxleInfo axleInfo in axleInfos)
@@ -179,22 +201,37 @@ public class CarController : MonoBehaviour
             }
 
             // Downforce helper
-            rb.AddRelativeForce(-Vector3.up * (50f+speed) * downforce );
+            rb.AddRelativeForce(-Vector3.up * (50f + speed) * downforce);
 
             // Break helper
-            float t = 1+Mathf.Min(Input.GetAxis("Speed"), 0);
+            float t = 1 + Mathf.Min(Input.GetAxis("Speed"), 0);
             float newDrag = Mathf.Lerp(breakDrag, defaultDrag, t);
             rb.drag = newDrag;
 
             // Speed helper
             float t2 = Mathf.Max(Input.GetAxis("Speed"), 0);
-            
+
             rb.AddForce(this.transform.forward * speedHelper * t2);
         }
 
+        bool didBoost = false;
+        // Boost
         if (Input.GetButton("Fire2"))
         {
-            rb.AddForce(this.transform.forward * maxBoostPower);
+            if (currentBoost >= boostUsage)
+            {
+                rb.AddForce(this.transform.forward * maxBoostPower);
+                didBoost = true;
+                currentBoost -= boostUsage;
+            }
+        }
+
+        if (!didBoost)
+        {
+            if (onGround)
+            {
+                currentBoost = Mathf.Min(maxBoost, currentBoost + boostRegen);
+            }
         }
 
 
